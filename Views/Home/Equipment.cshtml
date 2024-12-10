@@ -1,0 +1,27 @@
+﻿@model dynamic
+
+<h1>Equipment Information</h1>
+
+<p>Equipment data for registration number: @Model.registration_number</p>
+
+<div id="equipmentSection">
+    <table class="table" id="equipmentData">
+        <thead>
+            <tr>
+                <th>Equipment</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var equipment in Model.equipment)
+            {
+                <tr>
+                    <td>@equipment.name</td>
+                    <td>@equipment.quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- Back Button to go back to NummerPlate page -->
+<a href="@Url.Action("NummerPlate", "Home", new { registrationNumber = Model.registration_number })" class="btn btn-primary">Back to Vehicle Info</a>

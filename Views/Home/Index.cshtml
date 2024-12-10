@@ -2,7 +2,11 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Vehicle Information Check</h1>
+
+<form method="get" asp-controller="Home" asp-action="NummerPlate">
+    <label for="registrationNumber">Enter Registration Number:</label>
+    <input type="text" id="registrationNumber" name="registrationNumber" required />
+    <button type="submit">Submit</button>
+</form>
+
