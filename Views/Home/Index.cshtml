@@ -4,9 +4,57 @@
 
 <h1>Vehicle Information Check</h1>
 
-<form method="get" asp-controller="Home" asp-action="NummerPlate">
+<form id="registrationForm" method="get" asp-controller="Home" asp-action="NummerPlate">
     <label for="registrationNumber">Enter Registration Number:</label>
     <input type="text" id="registrationNumber" name="registrationNumber" required />
     <button type="submit">Submit</button>
 </form>
+
+
+<script>
+     // Listen for form submission
+     document.getElementById('registrationForm').addEventListener('submit', function (event) {
+         event.preventDefault(); // Prevent the default form submission
+
+         // Get the registration number entered by the user
+         let registrationNumber = document.getElementById('registrationNumber').value.trim();
+
+         // Simple validation for License plate (this can be improved)
+         let validPlatePattern = /^[A-Z0-9]{1,7}$/; // For example, we use a simple pattern
+         if (!validPlatePattern.test(registrationNumber)) {
+             alert("Invalid registration number. Please try again.");
+             return;
+         }
+
+         // Store in local storage
+         let storedPlates = JSON.parse(localStorage.getItem('plates')) || []; // Get stored plates or initialize empty array
+
+         // Save the plate if it's not already stored
+         if (!storedPlates.includes(registrationNumber)) {
+             storedPlates.push(registrationNumber);
+             localStorage.setItem('plates', JSON.stringify(storedPlates)); // Save back to localStorage
+             alert("This Number Plate: " + registrationNumber + " has been saved in our system.");
+             console.log('Number plate saved:', registrationNumber);
+             console.log('Stored plates:', storedPlates);
+         } else {
+             alert("This Number Plate: " + registrationNumber + " already exists in the system.");
+         }
+
+         // Now check the prediction after the new plate is added to the local storage
+         let prediction = predictPlate(registrationNumber, storedPlates);
+         if (prediction) {
+             alert("This Number Plate: " + registrationNumber + " is predicted in our system already.");
+         } else {
+             alert("This is an invalid number plate.");
+         }
+
+         // Optionally, you can also redirect to fetch the vehicle data
+         window.location.href = '/Home/NummerPlate?registrationNumber=' + registrationNumber;
+     });
+
+     // Basic prediction function to check if the entered plate matches any in the saved list
+     function predictPlate(plate, storedPlates) {
+         return storedPlates.includes(plate); // Return true if plate is in the stored plates, otherwise false
+     }
+</script>
 

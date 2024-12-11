@@ -1,47 +1,14 @@
-﻿@* @{
-    ViewData["Title"] = "NummerPlate Page";
-}
-
-<h1>Vehicle Information</h1>
-
-@if (Model != null)
-{
-    var vehicleData = Model as Newtonsoft.Json.Linq.JObject;
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Property</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var property in vehicleData)
-            {
-                <tr>
-                    <td>@property.Key</td>
-                    <td>@property.Value</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No vehicle data available.</p>
-}
- *@
-@{
+﻿@{
     ViewData["Title"] = "Vehicle Information";
 }
 
 <h1>Vehicle Information</h1>
-
+@* 
 <form method="get" asp-controller="Home" asp-action="NummerPlate">
     <label for="registrationNumber">Enter Registration Number:</label>
     <input type="text" id="registrationNumber" name="registrationNumber" required />
     <button type="submit">Submit</button>
-</form>
+</form> *@
 
 @if (Model != null)
 {
@@ -93,54 +60,5 @@ else
 {
     <p>No vehicle data available.</p>
 }
-
 <script>
-    // Fetch environment data
-    document.getElementById("btnEnvironment").addEventListener("click", function () {
-        let registrationNumber = '@Model.registration_number'; // Dynamic value passed from model
-        window.location.href = `/Home/Environment?registrationNumber=${registrationNumber}`;
-    });
-    // Fetch equipment data
-    document.getElementById("btnEquipment").addEventListener("click", function () {
-        let registrationNumber = '@Model.registration_number'; // Dynamic value passed from model
-        fetch(`/Home/Equipment?registrationNumber=${registrationNumber}`)
-            .then(response => response.json())  // Ensure it's treated as JSON
-            .then(data => {
-                console.log(data);  // Log the data to check its structure
-                document.getElementById("environmentSection").style.display = "none";
-                document.getElementById("equipmentSection").style.display = "block";
-
-                // Fill table with equipment data
-                let equipmentTable = document.getElementById("equipmentData");
-                equipmentTable.innerHTML = ''; // Clear previous data
-
-                // Check if data.equipment is available and is an array
-                data.forEach(equipment => {
-                    let row = document.createElement('tr');
-                    let nameCell = document.createElement('td');
-                    let quantityCell = document.createElement('td');
-
-                    nameCell.textContent = equipment.name; // Display equipment name
-                    quantityCell.textContent = equipment.quantity; // Display equipment quantity
-
-                    row.appendChild(nameCell);
-                    row.appendChild(quantityCell);
-
-                    equipmentTable.appendChild(row);
-                });
-            })
-            .catch(error => {
-                console.error("Error fetching equipment data: ", error);
-            });
-    });
-
-
-
-
-
-
-    document.getElementById("btnReset").addEventListener("click", function () {
-        document.getElementById("environmentSection").style.display = "none";
-        document.getElementById("equipmentSection").style.display = "none";
-    });
 </script>
