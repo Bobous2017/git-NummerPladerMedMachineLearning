@@ -1,7 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Vehicle Information";
 }
-
 <h1>Vehicle Information</h1>
 @* 
 <form method="get" asp-controller="Home" asp-action="NummerPlate">
@@ -13,7 +12,6 @@
 @if (Model != null)
 {
     var vehicleData = Model as Newtonsoft.Json.Linq.JObject;
-
     <table class="table">
         <thead>
             <tr>
@@ -31,7 +29,6 @@
             }
         </tbody>
     </table>
-
     <!-- Buttons to toggle between Environment and Equipment -->
     <button id="btnEnvironment" onclick="window.location.href='/Home/Environment?registrationNumber=@Model.registration_number'">Environment</button>
     <button id="btnEquipment" onclick="window.location.href='/Home/Equipment?registrationNumber=@Model.registration_number'">Equipment</button>
